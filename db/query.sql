@@ -3,7 +3,6 @@ INSERT INTO employee (first_name, last_name, manager_id, role_id)
 VALUES ('John', 'Doe', NULL, 1);
 
 -- Query to see all roles
-
 SELECT 
   role.title,
   department.name AS department,
@@ -19,3 +18,11 @@ FROM employee e1
 JOIN employee e2 ON e1.manager_id = e2.id
 WHERE e1.manager_id IS NOT NULL;
 
+
+--query to see sallary by unit
+SELECT d.name AS department_name, SUM(r.salary) AS total_salary
+FROM employee e
+JOIN role r ON e.role_id = r.id
+JOIN department d ON r.department_id = d.id
+WHERE d.name = Sales
+GROUP BY d.name;
