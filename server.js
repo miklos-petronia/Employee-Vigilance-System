@@ -107,3 +107,25 @@ const startPrompt = () => {
 
 // Run Inquirer Prompts
 startPrompt();
+
+//Task to develop a query to see workers
+viewEmployees = () => {
+    const sql = `SELECT 
+    employee.first_name,
+    employee.last_name,
+    role.title,
+    department.name AS department,
+    role.salary
+  FROM employee employee
+  INNER JOIN role role ON employee.role_id = role.id
+  INNER JOIN department department ON role.department_id = department.id;`;
+
+
+    connection.promise().query(sql)
+        .then(([rows, fields]) => {
+            console.log(`\nThere are Currently ${rows.length} Employees assigned to a Role\n`)
+            console.table(rows);
+            startPrompt();
+        })
+        .catch(console.log)
+}
