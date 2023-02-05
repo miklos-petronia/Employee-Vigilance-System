@@ -392,3 +392,21 @@ WHERE e1.manager_id IS NOT NULL;`;
         })
         .catch(console.log)
 }
+
+// Application to develop a query that see workers by department
+viewEmployeesByDepartment = () => {
+    const viewEmployeesByDepartmentSQL = `SELECT e.first_name, e.last_name, d.name AS department
+    FROM employee e
+    INNER JOIN role r ON e.role_id = r.id
+    INNER JOIN department d ON r.department_id = d.id
+    ORDER BY d.name;
+    `;
+
+    connection.promise().query(viewEmployeesByDepartmentSQL)
+        .then(([rows, fields]) => {
+            console.log(`\nViewing employees by department.\n`)
+            console.table(rows);
+            startPrompt();
+        })
+        .catch(console.log)
+}
