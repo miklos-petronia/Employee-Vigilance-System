@@ -334,3 +334,44 @@ addDepartment = () => {
                 });
         });
 }
+
+//Application to update a workers manager
+updateEmployeeManager = () => {
+    const returnEmployeesSQL = `SELECT * FROM employee`;
+    connection.promise().query(returnEmployeesSQL)
+        .then(([rows, fields]) => {
+            //Retrieve data on the workers
+            const returnEmployee = rows.map(({ id, first_name, last_name }) => ({ name: first_name + " " + last_name, value: id }));
+            //Retrieve information on the workers role
+            const returnManager = rows.map((({ id, first_name, last_name }) => ({ name: first_name + " " + last_name, value: id })));
+            inquirer.prompt([{
+                type: 'list',
+                name: 'updateEmployeeManager',
+                message: 'Select the employee whos manager you would like to update?',
+                choices: returnEmployee
+            },
+            {
+                type: 'list',
+                name: 'selectNewManager',
+                message: 'Who is the employees new manager?',
+                choices: returnManager
+            }])
+                .then((data) => {
+                    // Decode the prompt data to receive the users options
+                    const { updateEmployeeManager, selectNewManager } = data;
+                    console.log(data)
+                    //SQL in adding an update the manager of an employee with to prevent sql insertation
+                    const updateManagerSQL = `UPDATE employee
+                    SET manager_id = ?
+                    WHERE id = ?;`;
+                    connection.promise().query(updateManagerSQL, [selectNewManager, updateEmployeeManager])
+                        .then(() => {
+                            console.log(`\nEmployee Role has be updated\n`);
+                            startPrompt();
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                });
+        });
+}
