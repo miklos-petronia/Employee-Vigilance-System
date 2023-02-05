@@ -234,3 +234,64 @@ viewRoles = () => {
         })
         .catch(console.log)
 }
+
+//function to create a query to view all the roles that currently have an employee
+viewRoles = () => { 
+    const viewRoleSQL = `SELECT 
+    role.title,
+    department.name AS department,
+    role.salary
+  FROM employee employee
+  INNER JOIN role role ON employee.role_id = role.id
+  INNER JOIN department department ON role.department_id = department.id;`;
+
+  
+    connection.promise().query(viewRoleSQL)
+        .then(([rows, fields]) => {
+        console.log(`\nThere are Currently ${rows.length} Roles with active employees\n`)
+            console.table(rows);
+            startPrompt();
+    })
+        .catch(console.log)
+}
+
+//Application in adding role to the roles table
+addRole = () => {
+    //Retrive all roles then add the data to the inquirer prompt
+    const returnDepartmentSQL = `SELECT * FROM department`;
+    connection.promise().query(returnDepartmentSQL)
+        .then(([rows, fields]) => {
+            const returnDepartment = rows.map(({ id, name }) => ({ name: name, value: id }));
+            inquirer.prompt([{
+                type: 'input',
+                name: 'newRoleName',
+                message: 'What is the name of the role?'
+            },
+            {
+                type: 'number',
+                name: 'newRoleSalary',
+                message: 'What is the salary of the role?'
+            },
+            {
+                type: 'list',
+                name: 'newRoleDepartment',
+                message: 'What department does the role belong to?',
+                choices: returnDepartment
+            }])
+                .then((data) => {
+                    // Decode the prompt data to retrieve the users options
+                    const { newRoleName, newRoleSalary, newRoleDepartment } = data;
+                    //SQL to add a new role to stop sql insert
+                    const addRoleSQL = `INSERT INTO role (title, salary, department_id)
+                VALUES (?, ?, ?);`;
+                    connection.promise().query(addRoleSQL, [newRoleName, newRoleSalary, newRoleDepartment])
+                        .then(() => {
+                            console.log(`\nNew Role has been added:\n`);
+                            startPrompt();
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                });
+        });
+}
