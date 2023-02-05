@@ -130,5 +130,28 @@ viewEmployees = () => {
         .catch(console.log)
 }
 
-//Application inding workers to the employee tables
+//Application in adding workers to the employee tables
 addEmployees = () => {
+
+    //Reinstate all roles then add the data to inquirer prompt
+    const returnRoleSQL = `Select * FROM Role`;
+    connection.promise().query(returnRoleSQL)
+        .then(([rows, fields]) => {
+            const returnRoles = rows.map(({ id, title }) => ({ name: title, value: id }));
+            inquirer.prompt([{
+                type: 'input',
+                name: 'newEmployeeFirstName',
+                message: 'What is the employees first name?'
+            },
+            {
+                type: 'input',
+                name: 'newEmployeeLastName',
+                message: 'What is the employees last name?'
+            },
+            {
+                type: 'list',
+                name: 'newEmployeeRole',
+                message: 'What is the employees role?',
+                choices: returnRoles
+            }])
+                .then((data) => {
