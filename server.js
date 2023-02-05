@@ -500,3 +500,22 @@ deleteDepartment = () => {
                 });
         });
 }
+
+//Application to see the units budget for a selected department.
+viewDepartmentBudget = () => {
+
+    const viewDepartmentBudgetSQL = `SELECT d.name AS department_name, SUM(r.salary) AS total_budget
+    FROM employee e
+    JOIN role r ON e.role_id = r.id
+    JOIN department d ON r.department_id = d.id
+    GROUP BY d.name;
+    `;
+
+    connection.promise().query(viewDepartmentBudgetSQL)
+        .then(([rows, fields]) => {
+            console.log(`\nBelow is the total budget for each Department.\n`)
+            console.table(rows);
+            startPrompt();
+        })
+        .catch(console.log)
+}
