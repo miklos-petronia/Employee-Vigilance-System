@@ -308,3 +308,29 @@ viewDepartment = () => {
         })
         .catch(console.log)
 }
+
+//Application in adding a unit to the unit table
+addDepartment = () => {
+
+    inquirer.prompt([{
+        type: 'input',
+        name: 'newDepartmentName',
+        message: 'What is the name of the Department?'
+    },])
+        .then((data) => {
+            // Decode the prompt data to receive the users option
+            const { newDepartmentName } = data;
+            //SQL to add a new role withto stop sql insertation
+            const addDepartmentSQL = `INSERT INTO department (name)
+                    VALUES (?);`;
+            connection.promise().query(addDepartmentSQL, [newDepartmentName])
+                .then(() => {
+                    console.log(`\nNew Department has been added:\n`);
+                    viewDepartment()
+                    startPrompt();
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        });
+}
