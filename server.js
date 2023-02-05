@@ -129,3 +129,6 @@ viewEmployees = () => {
         })
         .catch(console.log)
 }
+
+//Application inding workers to the employee tables
+addEmployees = () => {
