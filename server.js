@@ -196,3 +196,21 @@ updateEmployeeRole = () => {
                 choices: returnRoles
             }])
                 .then((data) => {
+                    // Decode the prompt data to retrieve the users options
+                    const { updateEmployeeRoleName, updateRoleTitle } = data;
+                    console.log(data)
+                    //SQL to add an update the role of an workers with  to stop sql usage
+                    const updateRoleSQL = `UPDATE employee
+                    SET role_id = ?
+                    WHERE id = ?;`;
+                    connection.promise().query(updateRoleSQL, [updateRoleTitle, updateEmployeeRoleName])
+                        .then(() => {
+                            console.log(`\nEmployee Role has be updated\n`);
+                            startPrompt();
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                });
+        });
+};
