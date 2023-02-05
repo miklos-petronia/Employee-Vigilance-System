@@ -470,3 +470,33 @@ deleteRole = () => {
                 });
         });
 }
+
+//Application to delete a units.
+deleteDepartment = () => {
+    const returnDepartmentsSQL = `SELECT * FROM Department`;
+    connection.promise().query(returnDepartmentsSQL)
+        .then(([rows, fields]) => {
+            //retrieve data on the units
+            const returnDepartments = rows.map(({ id, name }) => ({ name: name, value: id }));
+            inquirer.prompt([{
+                type: 'list',
+                name: 'deleteDepartment',
+                message: 'Select the Department you would like to delete?',
+                choices: returnDepartments
+            },])
+                .then((data) => {
+                    // Decode the prompt data to retrieve the users options
+                    const { deleteDepartment } = data;
+                    //SQL to add an update the unit of an employee with to stop sql injection
+                    const deleteDepartmentSQL = `DELETE FROM department WHERE id = ?;`;
+                    connection.promise().query(deleteDepartmentSQL, [deleteDepartment])
+                        .then(() => {
+                            console.log(`\nDepartment has been Deleted\n`);
+                            startPrompt();
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                });
+        });
+}
