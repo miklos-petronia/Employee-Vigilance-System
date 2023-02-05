@@ -214,3 +214,23 @@ updateEmployeeRole = () => {
                 });
         });
 };
+
+//Application to develop a query to see all the roles that presently have an worker
+viewRoles = () => {
+    const viewRoleSQL = `SELECT 
+    role.title,
+    department.name AS department,
+    role.salary
+  FROM employee employee
+  INNER JOIN role role ON employee.role_id = role.id
+  INNER JOIN department department ON role.department_id = department.id;`;
+
+
+    connection.promise().query(viewRoleSQL)
+        .then(([rows, fields]) => {
+            console.log(`\nThere are Currently ${rows.length} Roles with active employees\n`)
+            console.table(rows);
+            startPrompt();
+        })
+        .catch(console.log)
+}
