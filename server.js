@@ -171,3 +171,6 @@ addEmployees = () => {
                 });
         });
 };
+
+//Application to update the role of a selected worker
+updateEmployeeRole = () => {
