@@ -25,3 +25,14 @@ const connection = mysql.createConnection(
     },
     console.log(`Connected to the employees_db database.`),
 );
+
+// Commence the inquirer prompt to view what the user wants to do the following
+const startPrompt = () => {
+
+    inquirer.prompt([{
+        type: 'list',
+        name: 'doNext',
+        message: 'What would you like to do?',
+        choices: ['View all Employees', 'View all Roles', 'View all Departments', 'View Employees by Manager', 'View Employees by Department', 'View Department Budget', 'Add Department', 'Add Employees', 'Add Role', 'Update Employee Role', 'Update Employee Managers', 'Delete Employee', 'Delete Role', 'Delete Department', 'Quit']
+    }])
+        .then((data) => {
