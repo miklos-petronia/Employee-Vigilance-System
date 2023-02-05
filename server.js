@@ -179,3 +179,5 @@ updateEmployeeRole = () => {
     connection.promise().query(returnEmployeeSQL)
         .then(([rows, fields]) => {
             console.table(rows)
+            //retrive information on the worker
+            const returnEmployees = rows.map(({ id, first_name, last_name, title }) => ({ name: first_name + " " + last_name + " " + title, value: id }));
