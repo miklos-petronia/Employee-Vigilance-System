@@ -174,3 +174,8 @@ addEmployees = () => {
 
 //Application to update the role of a selected worker
 updateEmployeeRole = () => {
+    //sql query to retrive the workers first name, last name, role title, role id and employee id. 
+    const returnEmployeeSQL = `SELECT employee.first_name, employee.last_name, role.title, employee.id, employee.role_id FROM employee JOIN role ON employee.role_id = role.id;`;
+    connection.promise().query(returnEmployeeSQL)
+        .then(([rows, fields]) => {
+            console.table(rows)
