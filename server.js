@@ -155,3 +155,19 @@ addEmployees = () => {
                 choices: returnRoles
             }])
                 .then((data) => {
+                    // Decode the prompt data to recieve the users options
+                    const { newEmployeeFirstName, newEmployeeLastName, newEmployeeRole } = data;
+                    //SQL to add a worker to prevent sql injection
+                    const addEmployeeSQL = `INSERT INTO employee (first_name, last_name, manager_id, role_id)
+            VALUES (?, ?, NULL, ?);`;
+                    connection.promise().query(addEmployeeSQL, [newEmployeeFirstName, newEmployeeLastName, newEmployeeRole])
+                        .then(() => {
+                            console.log(`\nEmployee information has been added to the employee table:\n`);
+                            startPrompt();
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                });
+        });
+};
