@@ -375,3 +375,20 @@ updateEmployeeManager = () => {
                 });
         });
 }
+
+//Application to develop a query that see workers by manager only
+viewEmployeesByManager = () => {
+    const viewEmployeesByManagerSQL = `SELECT e1.first_name AS employee_first_name, e1.last_name AS employee_last_name, 
+    e2.first_name AS manager_first_name, e2.last_name AS manager_last_name, e1.manager_id
+FROM employee e1
+JOIN employee e2 ON e1.manager_id = e2.id
+WHERE e1.manager_id IS NOT NULL;`;
+
+    connection.promise().query(viewEmployeesByManagerSQL)
+        .then(([rows, fields]) => {
+            console.log(`\n${rows.length} Employees Currently have a Manager\n`)
+            console.table(rows);
+            startPrompt();
+        })
+        .catch(console.log)
+}
