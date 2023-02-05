@@ -181,3 +181,18 @@ updateEmployeeRole = () => {
             console.table(rows)
             //retrive information on the worker
             const returnEmployees = rows.map(({ id, first_name, last_name, title }) => ({ name: first_name + " " + last_name + " " + title, value: id }));
+            //Retrive information on the workers role
+            const returnRoles = rows.map(({ role_id, title }) => ({ name: title, value: role_id }));
+            inquirer.prompt([{
+                type: 'list',
+                name: 'updateEmployeeRoleName',
+                message: 'Select the employee whos title you would like to update?',
+                choices: returnEmployees
+            },
+            {
+                type: 'list',
+                name: 'updateRoleTitle',
+                message: 'What is the employees new title?',
+                choices: returnRoles
+            }])
+                .then((data) => {
