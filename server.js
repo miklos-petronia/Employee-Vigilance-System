@@ -295,3 +295,16 @@ addRole = () => {
                 });
         });
 }
+
+//Application to develop a query to see the departments
+viewDepartment = () => {
+    const viewDepartmentSQL = `SELECT * from department;`;
+
+    connection.promise().query(viewDepartmentSQL)
+        .then(([rows, fields]) => {
+            console.log(`\nThere are Currently ${rows.length} Departments\n`)
+            console.table(rows);
+            startPrompt();
+        })
+        .catch(console.log)
+}
