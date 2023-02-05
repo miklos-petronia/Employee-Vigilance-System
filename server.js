@@ -440,3 +440,33 @@ deleteEmployee = () => {
                 });
         });
 }
+
+//Application to delete a role.
+deleteRole = () => {
+    const returnRolesSQL = `SELECT * FROM role`;
+    connection.promise().query(returnRolesSQL)
+        .then(([rows, fields]) => {
+            //retrive data on the roles
+            const returnRoles = rows.map(({ id, title }) => ({ name: title, value: id }));
+            inquirer.prompt([{
+                type: 'list',
+                name: 'deleteRole',
+                message: 'Select the role you would like to delete?',
+                choices: returnRoles
+            },])
+                .then((data) => {
+                    // Decode the prompt data to receive the users options
+                    const { deleteRole } = data;
+                    //SQL to add an update the role of an employee with  to stop sql insertion
+                    const deleteRoleSQL = `DELETE FROM role WHERE id = ?;`;
+                    connection.promise().query(deleteRoleSQL, [deleteRole])
+                        .then(() => {
+                            console.log(`\nRole has been Deleted\n`);
+                            startPrompt();
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                });
+        });
+}
