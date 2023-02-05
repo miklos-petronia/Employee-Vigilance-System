@@ -104,3 +104,6 @@ const startPrompt = () => {
             }
         })
 }
+
+// Run Inquirer Prompts
+startPrompt();
