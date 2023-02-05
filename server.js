@@ -410,3 +410,33 @@ viewEmployeesByDepartment = () => {
         })
         .catch(console.log)
 }
+
+//Application to remove/delete a workers.
+deleteEmployee = () => {
+    const returnEmployeeSQL = `SELECT * FROM employee`;
+    connection.promise().query(returnEmployeeSQL)
+        .then(([rows, fields]) => {
+            //Retrieve data on the workers
+            const returnEmployees = rows.map(({ id, first_name, last_name }) => ({ name: first_name + " " + last_name, value: id }));
+            inquirer.prompt([{
+                type: 'list',
+                name: 'deleteEmployee',
+                message: 'Select the employee you would like to delete?',
+                choices: returnEmployees
+            },])
+                .then((data) => {
+                    // Decode the prompt data to retrieve the users options
+                    const { deleteEmployee } = data;
+                    //SQL to add delete an employee with stop sql insertion
+                    const deleteEmployeeSQL = `DELETE FROM employee WHERE id = ?;`;
+                    connection.promise().query(deleteEmployeeSQL, [deleteEmployee])
+                        .then(() => {
+                            console.log(`\nEmployee has been Deleted\n`);
+                            startPrompt();
+                        })
+                        .catch((error) => {
+                            console.error(error);
+                        });
+                });
+        });
+}
