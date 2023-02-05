@@ -519,3 +519,12 @@ viewDepartmentBudget = () => {
         })
         .catch(console.log)
 }
+
+// Default reply for any other supplication (Not Found)
+app.use((req, res) => {
+    res.status(404).end();
+});
+
+app.listen(PORT, () => {
+    //   console.log(`Server running on port ${PORT}`);
+});
