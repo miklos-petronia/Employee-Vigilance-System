@@ -1,3 +1,4 @@
+-- Develop departements names --
 INSERT INTO department (name)
 VALUES 
 ('Sales'),
@@ -5,6 +6,7 @@ VALUES
 ('Finance'),
 ('Legal');
 
+-- Based on role develop title, earnings and department id --
 INSERT INTO role (title, salary, department_id)
 VALUES
 ('Sales Lead', 100000, 1),
@@ -16,10 +18,10 @@ VALUES
 ('Legal team lead', 250000, 4),
 ('Lawyer', 190000, 4);
 
-
+-- Based on employee develop first and laste name, role id and manager id --
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES 
-('John', 'Doe', 1, NULL), 
+('Yuxuan', 'Li', 1, NULL), 
 ('Mike', 'Chan', 2, 1),
 ('Ashley', 'Rodriguez', 3, NULL),
 ('Kevin', 'Tupik', 4, 3),

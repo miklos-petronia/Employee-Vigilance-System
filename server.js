@@ -42,7 +42,7 @@ const startPrompt = () => {
             //Switch sample to run application based on users feedback
             switch (doNext) { 
                 case 'View all Employees': { 
-                    viewEmployees();
+                    seeEmployees();
                     break
                 }
                 case 'View all Roles': { 
@@ -54,11 +54,11 @@ const startPrompt = () => {
                     break
                 }
                 case 'View Employees by Manager': {
-                    viewEmployeesByManager();
+                    seeEmployeesByManager();
                     break
                 }
                 case 'View Employees by Department': { 
-                    viewEmployeesByDepartment();
+                    seeEmployeesByDepartment();
                     break
                 }
                 case 'View Department Budget': {
@@ -109,7 +109,7 @@ const startPrompt = () => {
 startPrompt();
 
 //Application to develop a query to see workers
-viewEmployees = () => { 
+seeEmployees = () => { 
     const sql = `SELECT 
     employee.first_name,
     employee.last_name,
@@ -355,14 +355,14 @@ updateEmployeeManager = () => {
         });
 }
 //Application to develop a query that sees workers by manager only
-viewEmployeesByManager = () => { 
-    const viewEmployeesByManagerSQL = `SELECT e1.first_name AS employee_first_name, e1.last_name AS employee_last_name, 
+seeEmployeesByManager = () => { 
+    const seeEmployeesByManagerSQL = `SELECT e1.first_name AS employee_first_name, e1.last_name AS employee_last_name, 
     e2.first_name AS manager_first_name, e2.last_name AS manager_last_name, e1.manager_id
 FROM employee e1
 JOIN employee e2 ON e1.manager_id = e2.id
 WHERE e1.manager_id IS NOT NULL;`; 
   
-    connection.promise().query(viewEmployeesByManagerSQL)
+    connection.promise().query(seeEmployeesByManagerSQL)
         .then(([rows, fields]) => {
         console.log(`\n${rows.length} Employees Currently have a Manager\n`)
             console.table(rows);
@@ -371,15 +371,15 @@ WHERE e1.manager_id IS NOT NULL;`;
         .catch(console.log)
 }
 // Application to develop a query that sees employees by unit
-viewEmployeesByDepartment = () => { 
-    const viewEmployeesByDepartmentSQL = `SELECT e.first_name, e.last_name, d.name AS department
+seeEmployeesByDepartment = () => { 
+    const seeEmployeesByDepartmentSQL = `SELECT e.first_name, e.last_name, d.name AS department
     FROM employee e
     INNER JOIN role r ON e.role_id = r.id
     INNER JOIN department d ON r.department_id = d.id
     ORDER BY d.name;
     `; 
   
-    connection.promise().query(viewEmployeesByDepartmentSQL)
+    connection.promise().query(seeEmployeesByDepartmentSQL)
         .then(([rows, fields]) => {
         console.log(`\nViewing employees by department.\n`)
             console.table(rows);
@@ -455,7 +455,7 @@ deleteDepartment = () => {
             inquirer.prompt([{
                 type: 'list',
                 name: 'deleteDepartment',
-                message: 'Choose the Department unit you would like to remove?',
+                message: 'Select the Department you would like to delete?',
                 choices: returnDepartments
             },])
                 .then((data) => {
