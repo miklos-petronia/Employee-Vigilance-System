@@ -1,19 +1,18 @@
--- relinquish and develop database
+-- drop and create database
 DROP DATABASE IF EXISTS employees_db;
 
 CREATE DATABASE employees_db;
 
--- Utilize this database
+-- Use this database
 USE employees_db;
 
--- develop the unit table
+-- create the department table
 CREATE TABLE department (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(30)
  
 );
-
--- Developing the role table
+-- create the role table
 CREATE TABLE role (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(30),
@@ -21,8 +20,7 @@ CREATE TABLE role (
   department_id INT,
   FOREIGN KEY (department_id) REFERENCES department(id) ON DELETE CASCADE
 );
-
--- Developing the employee table
+-- Create the employee table
 CREATE TABLE employee (
   id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
   first_name VARCHAR(30),

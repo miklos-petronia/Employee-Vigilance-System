@@ -1,4 +1,3 @@
--- adding names to the department 
 INSERT INTO department (name)
 VALUES 
 ('Sales'),
@@ -6,7 +5,6 @@ VALUES
 ('Finance'),
 ('Legal');
 
---Adding within the roles the title, salary and the department ID
 INSERT INTO role (title, salary, department_id)
 VALUES
 ('Sales Lead', 100000, 1),
@@ -18,7 +16,7 @@ VALUES
 ('Legal team lead', 250000, 4),
 ('Lawyer', 190000, 4);
 
---Adding employee names; first name and last name adding also role_ID and manager_ID
+
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES 
 ('John', 'Doe', 1, NULL), 
