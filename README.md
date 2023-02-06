@@ -45,7 +45,7 @@ To start the application, type the following into the terminal: $ node server.js
 
  1. install npm init -y to create a new .json file
  2. npm i
- 3. npm i inquirer
+ 3. npm i inquirer@8.2.4
  4. npm i mysql
  5. npm i console.table
  6. Make sure to run .sql file in mySQL workbench before running server.js so that tables are able to render correctly
