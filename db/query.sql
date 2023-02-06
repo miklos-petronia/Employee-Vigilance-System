@@ -1,7 +1,7 @@
 
 -- Query to insert a worker --
 INSERT INTO employee (first_name, last_name, manager_id, role_id)
-VALUES ('John', 'Doe', NULL, 1);
+VALUES ('Mike', 'Li', NULL, 1);
 
 -- Query to see all roles --
 SELECT 

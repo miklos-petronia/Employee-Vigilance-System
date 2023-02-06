@@ -9,13 +9,13 @@ VALUES
 -- Based on role develop title, earnings and department id --
 INSERT INTO role (title, salary, department_id)
 VALUES
-('Sales Lead', 100000, 1),
-('Salesperson', 80000, 1),
-('Lead Engineer', 150000, 2), 
-('Software Engineer', 120000, 2),
-('Account Manager', 160000, 3), 
+('Sales Lead', 150000, 1),
+('Salesperson', 85000, 1),
+('Lead Engineer', 250000, 2), 
+('Software Engineer', 320000, 2),
+('Account Manager', 260000, 3), 
 ('Accountant', 125000, 3),
-('Legal team lead', 250000, 4),
+('Legal team lead', 350000, 4),
 ('Lawyer', 190000, 4);
 
 -- Based on employee develop first and laste name, role id and manager id --
