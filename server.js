@@ -1,4 +1,3 @@
-
 const express = require('express');
 // Import and essential mysql2
 const mysql = require('mysql2');
@@ -22,7 +21,7 @@ const connection = mysql.createConnection(
     // MySQL username,
     user: 'root',
     // TODO: Insert MySQL password 
-    password: 'Rootroot',
+    password: '',
     database: 'employees_db'
   },
     console.log(`Connected to the employees_db database.`),
